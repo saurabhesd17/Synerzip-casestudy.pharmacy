@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+ http://www.springframework.org/schema/beans/spring-beans.xsd
+ http://www.springframework.org/schema/context
+ http://www.springframework.org/schema/context/spring-context.xsd
+ http://www.springframework.org/schema/util
+ http://www.springframework.org/schema/util/spring-util.xsd">
+
+	<context:annotation-config />
+	<context:property-placeholder location="classpath:com/saurabh/medicalpharmacy/Pharmacy.properties"/>
+
+	<bean name="ds"
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName"
+			value="com.mysql.cj.jdbc.Driver" />
+		<property name="url"
+			value="jdbc:mysql://localhost:3360/projectpharmacy" />
+		<property name="username" value="root" />
+		<property name="password" value="saurabh17" />
+	</bean>
+
+	<bean name="jdbcTemplate"
+		class="org.springframework.jdbc.core.JdbcTemplate">
+		<property name="dataSource">
+			<ref bean="ds" />
+		</property>
+	</bean>
+
+
+	<!-- Pharmacy -->
+	<bean name="pharmacyDao"
+		class="com.saurabh.dao.PharmacyDao">
+		<property name="jdbcTemplate" ref="jdbcTemplate" />
+	</bean>
+	
+	<!-- getting properties from Pharma.properties file -->
+	<bean name="pharmacy1" class="com.saurabh.entities.Pharmacy">
+		<property name="id" value="${id}"/>
+		<property name="name" value="${name}"/>
+		<property name="license" value="${license}"/>
+		<property name="address" value="${address}"/>
+		<property name="contact" value="${contact}"/>
+	</bean>
+	
+	
+	<!-- Doctor -->
+	<bean name="doctorDao"
+		class="com.saurabh.dao.DoctorDao">
+		<property name="jdbcTemplate" ref="jdbcTemplate" />
+	</bean>
+	
+	<bean name="doctor1" class="com.saurabh.entities.Doctor">
+		<property name="id" value="100"/>
+		<property name="firstName" value="Saurabh"/>
+		<property name="lastName" value="Bhende"/>	
+	</bean>
+	
+	
+	<!-- Medicine -->
+	<bean name="medicineDao"
+		class="com.saurabh.dao.MedicineDao">
+		<property name="jdbcTemplate" ref="jdbcTemplate" />
+	</bean>
+	
+	<bean name="medicine1" class="com.saurabh.entities.Medicine">
+		<property name="id" value="101"/>
+		<property name="name" value="Abacavir"/>
+		<property name="brand" value="Generic"/>
+		<!-- <property name="pharmacy" value="101"/> -->
+	</bean>
+	
+	<bean name="medicine2" class="com.saurabh.entities.Medicine">
+		<property name="id" value="106"/>
+		<property name="name" value="Acacia"/>
+		<property name="brand" value="Generic"/>
+		<!-- <property name="pharmacyId" value="101"/> -->
+	</bean>
+	
+	<bean name="medicine3" class="com.saurabh.entities.Medicine">
+		<property name="id" value="103"/>
+		<property name="name" value="Acarbose"/>
+		<property name="brand" value="Generic"/>
+		<!-- <property name="pharmacyId" value="101"/> -->
+	</bean>
+	
+	<bean name="medicine4" class="com.saurabh.entities.Medicine">
+		<property name="id" value="104"/>
+		<property name="name" value="Selenium"/>
+		<property name="brand" value="Generic"/>
+		<!-- <property name="pharmacyId" value="101"/> -->
+	</bean>
+	
+	<bean name="medicine5" class="com.saurabh.entities.Medicine">
+		<property name="id" value="105"/>
+		<property name="name" value="Serine"/>
+		<property name="brand" value="Generic"/>
+		<!-- <property name="pharmacyId" value="101"/> -->
+	</bean>
+	
+	
+	<!-- Order -->
+	<bean name="orderDao"
+		class="com.saurabh.dao.OrderDao">
+		<property name="jdbcTemplate" ref="jdbcTemplate" />
+	</bean>
+	
+	<bean name="order1" class="com.saurabh.entities.Order">
+		<property name="id" value="1"/>
+		<property name="quantity" value="2000"/>
+	</bean>
+	
+	<bean name="order2" class="com.saurabh.entities.Order">
+		<property name="id" value="2"/>
+		<property name="quantity" value="5000"/>
+	</bean>
+	
+	
+	<!-- Inventory -->
+	<bean name="inventoryDao"
+		class="com.saurabh.dao.InventoryDao">
+		<property name="jdbcTemplate" ref="jdbcTemplate" />
+	</bean>
+	
+	<bean name="inventory1" class="com.saurabh.entities.Inventory">
+		<property name="id" value="201"/>
+		<property name="stock" value="7000"/>
+	</bean>
+</beans>
